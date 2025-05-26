@@ -32,7 +32,7 @@
                                                 Tổng số công việc
                                             </dt>
                                             <dd class="text-lg font-medium text-gray-900">
-                                                0
+                                                {{ \App\Models\Task::count() }}
                                             </dd>
                                         </dl>
                                     </div>
@@ -55,7 +55,7 @@
                                                 Đang thực hiện
                                             </dt>
                                             <dd class="text-lg font-medium text-gray-900">
-                                                0
+                                                {{ \App\Models\Task::where('status', 'in_progress')->count() }}
                                             </dd>
                                         </dl>
                                     </div>
@@ -78,7 +78,7 @@
                                                 Đã hoàn thành
                                             </dt>
                                             <dd class="text-lg font-medium text-gray-900">
-                                                0
+                                                {{ \App\Models\Task::where('status', 'completed')->count() }}
                                             </dd>
                                         </dl>
                                     </div>
@@ -87,9 +87,14 @@
                         </div>
                     </div>
 
-                    <div class="mt-6">
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Tạo công việc mới
+                    <div class="mt-6 flex gap-4">
+                        <a href="{{ route('tasks.create') }}"
+                           class="inline-flex items-center px-4 py-2 bg-blue-400 border border-blue-700 rounded-md font-semibold text-base text-black hover:bg-blue-600 hover:text-white transition">
+                            ➕ Tạo công việc mới
+                        </a>
+                        <a href="{{ route('tasks.index') }}"
+                           class="inline-flex items-center px-4 py-2 bg-gray-300 border border-gray-700 rounded-md font-semibold text-base text-black hover:bg-gray-600 hover:text-white transition">
+                            📋 Xem danh sách công việc
                         </a>
                     </div>
                 </div>
