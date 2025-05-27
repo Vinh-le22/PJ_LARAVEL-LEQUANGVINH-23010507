@@ -1,66 +1,136 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Danh sách công việc') }}
-            </h2>
-            <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Tạo công việc mới
-            </a>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>Danh sách công việc</h2>
         </div>
-    </x-slot>
+    </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
+    <!-- Thống kê -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thống kê công việc</h5>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <h3>{{ $stats['total'] }}</h3>
+                                <p>Tổng số</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <h3>{{ $stats['pending'] }}</h3>
+                                <p>Đang chờ</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <h3>{{ $stats['in_progress'] }}</h3>
+                                <p>Đang thực hiện</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <h3>{{ $stats['completed'] }}</h3>
+                                <p>Hoàn thành</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <h3>{{ $stats['overdue'] }}</h3>
+                                <p>Quá hạn</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            @endif
+            </div>
+        </div>
+    </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+    <!-- Bộ lọc và sắp xếp -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('tasks.index') }}" method="GET" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="status" class="form-label">Trạng thái</label>
+                            <select name="status" id="status" class="form-select">
+                                <option value="">Tất cả</option>
+                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Đang chờ</option>
+                                <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>Đang thực hiện</option>
+                                <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="sort" class="form-label">Sắp xếp theo</label>
+                            <select name="sort" id="sort" class="form-select">
+                                <option value="">Mới nhất</option>
+                                <option value="due_date_asc" {{ request('sort') == 'due_date_asc' ? 'selected' : '' }}>Thời hạn tăng dần</option>
+                                <option value="due_date_desc" {{ request('sort') == 'due_date_desc' ? 'selected' : '' }}>Thời hạn giảm dần</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary">Lọc</button>
+                            <a href="{{ route('tasks.index') }}" class="btn btn-secondary ms-2">Đặt lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách công việc -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title">Danh sách công việc</h5>
+                        <a href="{{ route('tasks.create') }}" class="btn btn-primary">Tạo công việc mới</a>
+                    </div>
+                    
                     @if($tasks->isEmpty())
-                        <p class="text-center text-gray-500">Chưa có công việc nào.</p>
+                        <p class="text-center">Không có công việc nào.</p>
                     @else
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tiêu đề</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hạn hoàn thành</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời hạn</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody>
                                     @foreach($tasks as $task)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm font-medium text-gray-900">{{ $task->title }}</div>
-                                                @if($task->description)
-                                                    <div class="text-sm text-gray-500">{{ Str::limit($task->description, 50) }}</div>
-                                                @endif
+                                            <td>{{ $task->title }}</td>
+                                            <td>
+                                                @switch($task->status)
+                                                    @case('pending')
+                                                        <span class="badge bg-warning">Đang chờ</span>
+                                                        @break
+                                                    @case('in_progress')
+                                                        <span class="badge bg-info">Đang thực hiện</span>
+                                                        @break
+                                                    @case('completed')
+                                                        <span class="badge bg-success">Hoàn thành</span>
+                                                        @break
+                                                @endswitch
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    @if($task->status === 'completed') bg-green-100 text-green-800
-                                                    @elseif($task->status === 'in_progress') bg-yellow-100 text-yellow-800
-                                                    @else bg-gray-100 text-gray-800
-                                                    @endif">
-                                                    {{ $task->status === 'pending' ? 'Đang chờ' : 
-                                                       ($task->status === 'in_progress' ? 'Đang thực hiện' : 'Hoàn thành') }}
-                                                </span>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $task->due_date ? $task->due_date->format('d/m/Y') : 'Không có' }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <a href="{{ route('tasks.edit', $task) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Sửa</a>
-                                                <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline">
+                                            <td>{{ $task->due_date ? $task->due_date->format('d/m/Y') : 'Không có' }}</td>
+                                            <td>
+                                                <a href="{{ route('tasks.edit', $task) }}" class="btn btn-sm btn-primary">Sửa</a>
+                                                <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Bạn có chắc chắn muốn xóa công việc này?')">Xóa</button>
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -73,4 +143,5 @@
             </div>
         </div>
     </div>
-</x-app-layout> 
+</div>
+@endsection 

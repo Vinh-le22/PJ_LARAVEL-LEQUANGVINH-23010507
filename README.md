@@ -118,14 +118,14 @@ php artisan serve
 - [x] Đăng nhập/Đăng xuất
 - [x] Quản lý hồ sơ
 
-### Giai đoạn 2: Quản lý công việc 🚧
-- [ ] Tạo công việc mới
-- [ ] Cập nhật thông tin công việc
-- [ ] Theo dõi trạng thái
-- [ ] Đặt hạn hoàn thành
-- [ ] Xóa công việc
+### Giai đoạn 2: Quản lý công việc ✅
+- [x] Tạo công việc mới
+- [x] Cập nhật thông tin công việc
+- [x] Theo dõi trạng thái
+- [x] Đặt hạn hoàn thành
+- [x] Xóa công việc
 
-### Giai đoạn 3: Theo dõi tiến độ 📋
+### Giai đoạn 3: Theo dõi tiến độ 🚧
 - [ ] Hiển thị danh sách công việc
 - [ ] Lọc công việc theo trạng thái
 - [ ] Sắp xếp theo thời hạn

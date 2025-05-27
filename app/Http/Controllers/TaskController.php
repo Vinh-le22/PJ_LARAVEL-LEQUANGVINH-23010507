@@ -4,16 +4,58 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
     /**
      * Hiển thị danh sách công việc
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::latest()->get();
-        return view('tasks.index', compact('tasks'));
+        $query = Task::query();
+
+        // Lọc theo trạng thái
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Sắp xếp theo thời hạn
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'due_date_asc':
+                    $query->orderBy('due_date', 'asc');
+                    break;
+                case 'due_date_desc':
+                    $query->orderBy('due_date', 'desc');
+                    break;
+                default:
+                    $query->latest();
+            }
+        } else {
+            $query->latest();
+        }
+
+        $tasks = $query->get();
+        $stats = $this->getTaskStats();
+
+        return view('tasks.index', compact('tasks', 'stats'));
+    }
+
+    /**
+     * Lấy thống kê công việc
+     */
+    private function getTaskStats()
+    {
+        return [
+            'total' => Task::count(),
+            'pending' => Task::where('status', 'pending')->count(),
+            'in_progress' => Task::where('status', 'in_progress')->count(),
+            'completed' => Task::where('status', 'completed')->count(),
+            'overdue' => Task::where('status', '!=', 'completed')
+                ->where('due_date', '<', now())
+                ->count()
+        ];
     }
 
     /**
