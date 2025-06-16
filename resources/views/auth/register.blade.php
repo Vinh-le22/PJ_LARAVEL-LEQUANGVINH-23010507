@@ -1,78 +1,67 @@
-<x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
-            <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Đăng ký tài khoản
-                </h2>
-                <p class="mt-2 text-center text-sm text-gray-600">
+<!-- 
+    File: register.blade.php
+    Mô tả: Trang đăng ký tài khoản người dùng
+    Tác giả: [Tên của bạn]
+    Ngày tạo: [Ngày hiện tại]
+-->
+@extends('layouts.guest')
+
+@section('content')
+    <div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+        <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Đăng ký tài khoản</h2>
+                <p class="text-center text-muted mb-4">
                     Hoặc
-                    <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    <a href="{{ route('login') }}" class="text-decoration-none">
                         đăng nhập nếu đã có tài khoản
                     </a>
                 </p>
+
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">{{ __('Họ và tên') }}</label>
+                        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" class="form-control" placeholder="Nhập họ và tên của bạn">
+                        @error('name')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">{{ __('Email') }}</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" class="form-control" placeholder="Nhập email của bạn">
+                        @error('email')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">{{ __('Mật khẩu') }}</label>
+                        <input id="password" type="password" name="password" required autocomplete="new-password" class="form-control" placeholder="Nhập mật khẩu của bạn">
+                        @error('password')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="form-label">{{ __('Xác nhận mật khẩu') }}</label>
+                        <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="form-control" placeholder="Nhập lại mật khẩu của bạn">
+                        @error('password_confirmation')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">{{ __('Đăng ký') }}</button>
+                    </div>
+                </form>
             </div>
-
-            <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-6">
-                @csrf
-
-                <!-- Name -->
-                <div>
-                    <x-input-label for="name" :value="__('Họ và tên')" />
-                    <x-text-input id="name" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                        type="text" 
-                        name="name" 
-                        :value="old('name')" 
-                        required 
-                        autofocus 
-                        autocomplete="name"
-                        placeholder="Nhập họ và tên của bạn" />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                </div>
-
-                <!-- Email Address -->
-                <div class="mt-4">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                        type="email" 
-                        name="email" 
-                        :value="old('email')" 
-                        required 
-                        autocomplete="username"
-                        placeholder="Nhập email của bạn" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                </div>
-
-                <!-- Password -->
-                <div class="mt-4">
-                    <x-input-label for="password" :value="__('Mật khẩu')" />
-                    <x-text-input id="password" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        type="password"
-                        name="password"
-                        required 
-                        autocomplete="new-password"
-                        placeholder="Nhập mật khẩu của bạn" />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
-
-                <!-- Confirm Password -->
-                <div class="mt-4">
-                    <x-input-label for="password_confirmation" :value="__('Xác nhận mật khẩu')" />
-                    <x-text-input id="password_confirmation" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        type="password"
-                        name="password_confirmation" 
-                        required 
-                        autocomplete="new-password"
-                        placeholder="Nhập lại mật khẩu của bạn" />
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                </div>
-
-                <div class="mt-6">
-                    <x-primary-button class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        {{ __('Đăng ký') }}
-                    </x-primary-button>
-                </div>
-            </form>
         </div>
     </div>
-</x-guest-layout>
+@endsection

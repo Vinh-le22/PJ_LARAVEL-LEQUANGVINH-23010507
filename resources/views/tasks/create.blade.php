@@ -1,52 +1,66 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tạo công việc mới') }}
-        </h2>
-    </x-slot>
+<!-- 
+    File: create.blade.php
+    Mô tả: Trang tạo công việc mới
+    Tác giả: [Tên của bạn]
+    Ngày tạo: [Ngày hiện tại]
+-->
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('tasks.store') }}" class="space-y-6">
-                        @csrf
+@section('content')
+    <div class="container py-4">
+        <div class="card shadow-sm rounded-lg">
+            <div class="card-body">
+                <h2 class="card-title mb-4">{{ __('Tạo công việc mới') }}</h2>
 
-                        <div>
-                            <x-input-label for="title" :value="__('Tiêu đề')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required autofocus />
-                            <x-input-error class="mt-2" :messages="$errors->get('title')" />
-                        </div>
+                <form method="POST" action="{{ route('tasks.store') }}">
+                    @csrf
 
-                        <div>
-                            <x-input-label for="description" :value="__('Mô tả')" />
-                            <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="4">{{ old('description') }}</textarea>
-                            <x-input-error class="mt-2" :messages="$errors->get('description')" />
-                        </div>
+                    <!-- Tiêu đề -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">{{ __('Tiêu đề') }}</label>
+                        <input id="title" name="title" type="text" class="form-control" value="{{ old('title') }}" required autofocus>
+                        @error('title')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div>
-                            <x-input-label for="status" :value="__('Trạng thái')" />
-                            <select id="status" name="status" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Đang chờ</option>
-                                <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>Đang thực hiện</option>
-                                <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
-                            </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('status')" />
-                        </div>
+                    <!-- Mô tả -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">{{ __('Mô tả') }}</label>
+                        <textarea id="description" name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
+                        @error('description')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div>
-                            <x-input-label for="due_date" :value="__('Hạn hoàn thành')" />
-                            <x-text-input id="due_date" name="due_date" type="date" class="mt-1 block w-full" :value="old('due_date')" />
-                            <x-input-error class="mt-2" :messages="$errors->get('due_date')" />
-                        </div>
+                    <!-- Trạng thái -->
+                    <div class="mb-3">
+                        <label for="status" class="form-label">{{ __('Trạng thái') }}</label>
+                        <select id="status" name="status" class="form-select">
+                            <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Đang chờ</option>
+                            <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>Đang thực hiện</option>
+                            <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
+                        </select>
+                        @error('status')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="flex items-center gap-4">
-                            <x-primary-button>{{ __('Tạo công việc') }}</x-primary-button>
-                            <a href="{{ route('tasks.index') }}" class="text-gray-600 hover:text-gray-900">Hủy</a>
-                        </div>
-                    </form>
-                </div>
+                    <!-- Hạn hoàn thành -->
+                    <div class="mb-3">
+                        <label for="due_date" class="form-label">{{ __('Hạn hoàn thành') }}</label>
+                        <input id="due_date" name="due_date" type="date" class="form-control" value="{{ old('due_date') }}">
+                        @error('due_date')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="submit" class="btn btn-primary">{{ __('Tạo công việc') }}</button>
+                        <a href="{{ route('tasks.index') }}" class="btn btn-secondary">{{ __('Hủy') }}</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</x-app-layout> 
+@endsection 

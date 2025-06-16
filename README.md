@@ -1,6 +1,6 @@
 # Ứng dụng Quản lý Công việc Cá nhân
 
-Ứng dụng quản lý công việc cá nhân giúp bạn theo dõi, sắp xếp và hoàn thành các nhiệm vụ hàng ngày một cách hiệu quả.
+Ứng dụng quản lý công việc cá nhân giúp bạn theo dõi, sắp xếp và hoàn thành các nhiệm vụ hàng ngày một cách hiệu quả với giao diện người dùng theo chủ đề Hoa Anh Đào (Cherry Blossom).
 
 ## Tác dụng thực tế của ứng dụng
 
@@ -12,6 +12,7 @@
 
 ## Tính năng hiện có
 
+- 🌸 **Giao diện người dùng theo chủ đề Hoa Anh Đào**: Thiết kế hiện đại, nhẹ nhàng với các tông màu hồng và trắng, cùng hình nền hoa anh đào xuyên suốt ứng dụng.
 - 🔐 **Quản lý tài khoản cơ bản**
   - Tạo tài khoản mới
   - Đăng nhập/Đăng xuất
@@ -39,7 +40,7 @@
 - PHP >= 8.1
 - Composer
 - MySQL >= 5.7
-- Node.js & NPM
+- Node.js & NPM (chỉ cần thiết cho quá trình phát triển Laravel Breeze ban đầu, không bắt buộc để chạy ứng dụng với giao diện hiện tại vì CSS và JS được tải qua CDN hoặc từ thư mục public đã biên dịch).
 
 ## Cài đặt
 
@@ -98,38 +99,18 @@ php artisan serve
 - PHP 8.1+
 - MySQL 5.7+
 - Bootstrap 5
-- jQuery
+- Giao diện chủ đề Hoa Anh Đào (Custom CSS: cherry-blossom-theme.css)
 
 ## Cấu trúc thư mục
 
 - `app/` - Chứa các controllers, models, và business logic
 - `config/` - Chứa các file cấu hình
 - `database/` - Chứa migrations và seeders
-- `public/` - Chứa các file public như CSS, JS, images
-- `resources/` - Chứa views và các file frontend
+- `public/` - Chứa các file public như CSS (bao gồm `cherry-blossom-theme.css`), JS, images (bao gồm ảnh nền hoa anh đào)
+- `resources/` - Chứa views và các file frontend nguồn (không được biên dịch trực tiếp)
 - `routes/` - Chứa các định nghĩa routes
 - `storage/` - Chứa các file được upload và logs
 - `tests/` - Chứa các file test
-
-## Lộ trình phát triển
-
-### Giai đoạn 1: Xác thực người dùng ✅
-- [x] Đăng ký tài khoản
-- [x] Đăng nhập/Đăng xuất
-- [x] Quản lý hồ sơ
-
-### Giai đoạn 2: Quản lý công việc ✅
-- [x] Tạo công việc mới
-- [x] Cập nhật thông tin công việc
-- [x] Theo dõi trạng thái
-- [x] Đặt hạn hoàn thành
-- [x] Xóa công việc
-
-### Giai đoạn 3: Theo dõi tiến độ 🚧
-- [ ] Hiển thị danh sách công việc
-- [ ] Lọc công việc theo trạng thái
-- [ ] Sắp xếp theo thời hạn
-- [ ] Thống kê tiến độ
 
 ## Đóng góp
 

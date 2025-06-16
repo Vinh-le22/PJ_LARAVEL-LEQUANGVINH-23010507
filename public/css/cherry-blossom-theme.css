@@ -1,0 +1,217 @@
+/*
+ * File: cherry-blossom-theme.css
+ * Description: Custom CSS for a cherry blossom themed interface.
+ */
+
+:root {
+    --cb-primary: #ffb6c1; /* Light Pink - Cherry Blossom Petals */
+    --cb-secondary: #fce4ec; /* Lighter Pink - Soft background */
+    --cb-text-dark: #4a4a4a; /* Dark Gray - For text contrast */
+    --cb-text-light: #ffffff; /* White - For text on dark backgrounds */
+    --cb-accent-green: #8bc34a; /* Light Green - Leaves */
+    --cb-card-bg: #ffffff; /* White - Card backgrounds */
+    --cb-border: #e0e0e0; /* Light Gray - Borders */
+    --cb-shadow: rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+body {
+    background-color: var(--cb-secondary);
+    color: var(--cb-text-dark);
+    font-family: 'Figtree', sans-serif; /* Using existing font or a softer one */
+    background-image: url('/images/1732857240.webp');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: var(--cb-primary) !important;
+    border-bottom: 1px solid var(--cb-border) !important;
+}
+
+.navbar-brand, .nav-link {
+    color: var(--cb-text-dark) !important;
+}
+
+.dropdown-menu {
+    background-color: var(--cb-card-bg);
+    border: 1px solid var(--cb-border);
+    box-shadow: 0 0.5rem 1rem var(--cb-shadow);
+}
+
+.dropdown-item {
+    color: var(--cb-text-dark) !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--cb-primary) !important;
+    color: var(--cb-text-light) !important;
+}
+
+/* Cards (for forms, dashboard elements) */
+.card {
+    background-color: var(--cb-card-bg) !important;
+    border: 1px solid var(--cb-border) !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0.5rem 1rem var(--cb-shadow);
+}
+
+.card-header {
+    background-color: var(--cb-primary) !important;
+    color: var(--cb-text-light) !important;
+    border-bottom: 1px solid var(--cb-border) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--cb-primary) !important;
+    border-color: var(--cb-primary) !important;
+    color: var(--cb-text-light) !important;
+}
+
+.btn-primary:hover {
+    background-color: #ff91a4 !important; /* Slightly darker pink on hover */
+    border-color: #ff91a4 !important;
+}
+
+.btn-danger {
+    background-color: #e3342f !important; /* Keep a strong red for danger */
+    border-color: #e3342f !important;
+}
+
+.btn-danger:hover {
+    background-color: #cc1f1a !important;
+    border-color: #cc1f1a !important;
+}
+
+.btn-secondary {
+    background-color: #d6d8d9 !important;
+    border-color: #d6d8d9 !important;
+    color: var(--cb-text-dark) !important;
+}
+
+.btn-secondary:hover {
+    background-color: #c0c2c3 !important;
+    border-color: #c0c2c3 !important;
+}
+
+/* Form elements */
+.form-label {
+    color: var(--cb-text-dark);
+}
+
+.form-control {
+    border-color: var(--cb-border) !important;
+    color: var(--cb-text-dark) !important;
+}
+
+.form-control:focus {
+    border-color: var(--cb-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 182, 193, 0.25) !important; /* Light pink glow on focus */
+}
+
+/* Alerts and text colors */
+.alert-success {
+    background-color: #d4edda !important; /* Bootstrap default green but light */
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.alert-danger {
+    background-color: #f8d7da !important; /* Bootstrap default red but light */
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important; /* Bootstrap default danger text */
+}
+
+.text-success {
+    color: #28a745 !important; /* Bootstrap default success text */
+}
+
+/* General typography adjustments */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--cb-text-dark);
+}
+
+p {
+    color: var(--cb-text-dark);
+}
+
+a {
+    color: var(--cb-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff91a4; /* Slightly darker pink on hover */
+    text-decoration: underline;
+}
+
+/* Specific styling for the welcome message on dashboard */
+.p-6 {
+    padding: 1.5rem !important; /* Ensure padding is consistent */
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.h3 {
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.text-lg {
+    font-size: 1.125rem !important; /* Adjust font sizes if needed */
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.text-gray-900 {
+    color: var(--cb-text-dark) !important;
+}
+
+.text-gray-600 {
+    color: #6c757d !important; /* Bootstrap muted gray */
+}
+
+/* Dashboard specific styles */
+.h4.mb-0 {
+    font-size: 1.5rem;
+    color: var(--cb-text-dark);
+}
+
+.text-muted {
+    color: #6c757d !important; /* Standard Bootstrap muted color */
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.svg-icon {
+    color: var(--cb-primary); /* Default icon color */
+}
+
+.text-indigo-600 {
+    color: var(--cb-primary) !important;
+}
+
+.text-success {
+    color: var(--cb-accent-green) !important;
+}
+
+.text-warning {
+    color: #ffc107 !important; /* Bootstrap warning color, can be customized */
+} 

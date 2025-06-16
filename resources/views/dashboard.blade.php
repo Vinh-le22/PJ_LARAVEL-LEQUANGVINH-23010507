@@ -1,104 +1,77 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Bảng điều khiển') }}
-        </h2>
-    </x-slot>
+<!-- 
+    File: dashboard.blade.php
+    Mô tả: Trang bảng điều khiển chính
+    Tác giả: [Tên của bạn]
+    Ngày tạo: [Ngày hiện tại]
+-->
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="mb-4">
-                        <h3 class="text-lg font-medium text-gray-900">Xin chào, {{ Auth::user()->name }}!</h3>
-                        <p class="mt-1 text-sm text-gray-600">
-                            Chào mừng bạn đến với ứng dụng Quản lý công việc cá nhân.
-                        </p>
-                    </div>
+@section('content')
+    <div class="container py-4">
+        <div class="card shadow-sm rounded-lg text-center p-4">
+            <h3 class="h3 mb-3" style="color: var(--cb-text-dark);">Chào mừng {{ Auth::user()->name }} đến với web quản lý công việc!</h3>
+        </div>
 
-                    <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- Thống kê công việc -->
-                        <div class="bg-indigo-50 overflow-hidden shadow rounded-lg">
-                            <div class="p-5">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-5 w-0 flex-1">
-                                        <dl>
-                                            <dt class="text-sm font-medium text-gray-500 truncate">
-                                                Tổng số công việc
-                                            </dt>
-                                            <dd class="text-lg font-medium text-gray-900">
-                                                {{ \App\Models\Task::count() }}
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row mt-4">
+            <!-- Thống kê công việc -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm rounded-lg p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 0 00-2 2v12a2 0 002 2h10a2 0 002-2V7a2 0 00-2-2h-2M9 5a2 0 002 2h2a2 0 002-2M9 5a2 0 012-2h2a2 0 012 2"></path>
+                            </svg>
                         </div>
-
-                        <!-- Công việc đang thực hiện -->
-                        <div class="bg-green-50 overflow-hidden shadow rounded-lg">
-                            <div class="p-5">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-5 w-0 flex-1">
-                                        <dl>
-                                            <dt class="text-sm font-medium text-gray-500 truncate">
-                                                Đang thực hiện
-                                            </dt>
-                                            <dd class="text-lg font-medium text-gray-900">
-                                                {{ \App\Models\Task::where('status', 'in_progress')->count() }}
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Công việc đã hoàn thành -->
-                        <div class="bg-yellow-50 overflow-hidden shadow rounded-lg">
-                            <div class="p-5">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-6 w-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-5 w-0 flex-1">
-                                        <dl>
-                                            <dt class="text-sm font-medium text-gray-500 truncate">
-                                                Đã hoàn thành
-                                            </dt>
-                                            <dd class="text-lg font-medium text-gray-900">
-                                                {{ \App\Models\Task::where('status', 'completed')->count() }}
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="flex-grow-1">
+                            <h5 class="text-muted text-uppercase mb-0">Tổng số công việc</h5>
+                            <p class="h4 mb-0">{{ \App\Models\Task::count() }}</p>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="mt-6 flex gap-4">
-                        <a href="{{ route('tasks.create') }}"
-                           class="inline-flex items-center px-4 py-2 bg-blue-400 border border-blue-700 rounded-md font-semibold text-base text-black hover:bg-blue-600 hover:text-white transition">
-                            ➕ Tạo công việc mới
-                        </a>
-                        <a href="{{ route('tasks.index') }}"
-                           class="inline-flex items-center px-4 py-2 bg-gray-300 border border-gray-700 rounded-md font-semibold text-base text-black hover:bg-gray-600 hover:text-white transition">
-                            📋 Xem danh sách công việc
-                        </a>
+            <!-- Công việc đang thực hiện -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm rounded-lg p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <svg class="h-6 w-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="text-muted text-uppercase mb-0">Đang thực hiện</h5>
+                            <p class="h4 mb-0">{{ \App\Models\Task::where('status', 'in_progress')->count() }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Công việc đã hoàn thành -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm rounded-lg p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <svg class="h-6 w-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="text-muted text-uppercase mb-0">Đã hoàn thành</h5>
+                            <p class="h4 mb-0">{{ \App\Models\Task::where('status', 'completed')->count() }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="d-flex gap-2 justify-content-center mt-4">
+            <a href="{{ route('tasks.create') }}" class="btn btn-primary">
+                ➕ Tạo công việc mới
+            </a>
+            <a href="{{ route('tasks.index') }}" class="btn btn-secondary">
+                📋 Xem danh sách công việc
+            </a>
+        </div>
     </div>
-</x-app-layout>
+@endsection

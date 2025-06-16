@@ -26,24 +26,28 @@
         @method('patch')
 
         <!-- Trường nhập tên -->
-        <div>
-            <x-input-label for="name" :value="__('Họ và tên')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ __('Họ và tên') }}</label>
+            <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
+            @error('name')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Trường nhập email -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ __('Email') }}</label>
+            <input id="email" name="email" type="email" class="form-control" value="{{ old('email', $user->email) }}" required autocomplete="username">
+            @error('email')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Địa chỉ email của bạn chưa được xác thực.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button form="send-verification" class="btn btn-link p-0 m-0 align-baseline">
                             {{ __('Nhấn vào đây để gửi lại email xác thực.') }}
                         </button>
                     </p>
@@ -58,8 +62,8 @@
         </div>
 
         <!-- Nút lưu thông tin -->
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Lưu') }}</x-primary-button>
+        <div class="d-flex align-items-center gap-2">
+            <button type="submit" class="btn btn-primary">{{ __('Lưu') }}</button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -67,7 +71,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
+                    class="text-success ms-3"
                 >{{ __('Đã lưu.') }}</p>
             @endif
         </div>

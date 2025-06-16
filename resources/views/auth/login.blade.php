@@ -1,71 +1,70 @@
-<x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
-            <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Đăng nhập
-                </h2>
-                <p class="mt-2 text-center text-sm text-gray-600">
+<!-- 
+    File: login.blade.php
+    Mô tả: Trang đăng nhập người dùng
+    Tác giả: [Tên của bạn]
+    Ngày tạo: [Ngày hiện tại]
+-->
+@extends('layouts.guest')
+
+@section('content')
+    <div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+        <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Đăng nhập</h2>
+                <p class="text-center text-muted mb-4">
                     Hoặc
-                    <a href="{{ route('register') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    <a href="{{ route('register') }}" class="text-decoration-none">
                         đăng ký tài khoản mới
                     </a>
                 </p>
+
+                <!-- Session Status -->
+                @if (session('status'))
+                    <div class="alert alert-success mb-4">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <!-- Email Address -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">{{ __('Email') }}</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" class="form-control" placeholder="Nhập email của bạn">
+                        @error('email')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">{{ __('Mật khẩu') }}</label>
+                        <input id="password" type="password" name="password" required autocomplete="current-password" class="form-control" placeholder="Nhập mật khẩu của bạn">
+                        @error('password')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check">
+                            <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
+                            <label for="remember_me" class="form-check-label">{{ __('Ghi nhớ đăng nhập') }}</label>
+                        </div>
+
+                        @if (Route::has('password.request'))
+                            <a class="text-sm text-decoration-none" href="{{ route('password.request') }}">
+                                {{ __('Quên mật khẩu?') }}
+                            </a>
+                        @endif
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">{{ __('Đăng nhập') }}</button>
+                    </div>
+                </form>
             </div>
-
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-
-            <form method="POST" action="{{ route('login') }}" class="mt-8 space-y-6">
-                @csrf
-
-                <!-- Email Address -->
-                <div>
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                        type="email" 
-                        name="email" 
-                        :value="old('email')" 
-                        required 
-                        autofocus 
-                        autocomplete="username" 
-                        placeholder="Nhập email của bạn" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                </div>
-
-                <!-- Password -->
-                <div class="mt-4">
-                    <x-input-label for="password" :value="__('Mật khẩu')" />
-                    <x-text-input id="password" 
-                        class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        type="password"
-                        name="password"
-                        required 
-                        autocomplete="current-password"
-                        placeholder="Nhập mật khẩu của bạn" />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
-
-                <!-- Remember Me -->
-                <div class="flex items-center justify-between mt-4">
-                    <label for="remember_me" class="inline-flex items-center">
-                        <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Ghi nhớ đăng nhập') }}</span>
-                    </label>
-
-                    @if (Route::has('password.request'))
-                        <a class="text-sm text-indigo-600 hover:text-indigo-500" href="{{ route('password.request') }}">
-                            {{ __('Quên mật khẩu?') }}
-                        </a>
-                    @endif
-                </div>
-
-                <div class="mt-6">
-                    <x-primary-button class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        {{ __('Đăng nhập') }}
-                    </x-primary-button>
-                </div>
-            </form>
         </div>
     </div>
-</x-guest-layout>
+@endsection

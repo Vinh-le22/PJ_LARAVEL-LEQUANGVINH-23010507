@@ -21,29 +21,35 @@
         @method('put')
 
         <!-- Trường nhập mật khẩu hiện tại -->
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Mật khẩu hiện tại')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        <div class="mb-3">
+            <label for="update_password_current_password" class="form-label">{{ __('Mật khẩu hiện tại') }}</label>
+            <input id="update_password_current_password" name="current_password" type="password" class="form-control" autocomplete="current-password">
+            @error('current_password', 'updatePassword')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Trường nhập mật khẩu mới -->
-        <div>
-            <x-input-label for="update_password_password" :value="__('Mật khẩu mới')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+        <div class="mb-3">
+            <label for="update_password_password" class="form-label">{{ __('Mật khẩu mới') }}</label>
+            <input id="update_password_password" name="password" type="password" class="form-control" autocomplete="new-password">
+            @error('password', 'updatePassword')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Trường xác nhận mật khẩu mới -->
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Xác nhận mật khẩu mới')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+        <div class="mb-3">
+            <label for="update_password_password_confirmation" class="form-label">{{ __('Xác nhận mật khẩu mới') }}</label>
+            <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-control" autocomplete="new-password">
+            @error('password_confirmation', 'updatePassword')
+                <div class="text-danger mt-2">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Nút lưu mật khẩu -->
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Lưu') }}</x-primary-button>
+        <div class="d-flex align-items-center gap-2">
+            <button type="submit" class="btn btn-primary">{{ __('Lưu') }}</button>
 
             @if (session('status') === 'password-updated')
                 <p
@@ -51,7 +57,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
+                    class="text-success ms-3"
                 >{{ __('Đã lưu.') }}</p>
             @endif
         </div>
