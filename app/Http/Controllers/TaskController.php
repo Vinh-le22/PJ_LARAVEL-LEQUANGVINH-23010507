@@ -15,6 +15,9 @@ class TaskController extends Controller
     {
         $query = Task::query();
 
+        // Chỉ lấy công việc của user hiện tại
+        $query->where('user_id', $request->user()->id);
+
         // Lọc theo trạng thái
         if ($request->has('status')) {
             $query->where('status', $request->status);
@@ -37,7 +40,7 @@ class TaskController extends Controller
         }
 
         $tasks = $query->get();
-        $stats = $this->getTaskStats();
+        $stats = $this->getTaskStats($request->user()->id);
 
         return view('tasks.index', compact('tasks', 'stats'));
     }
@@ -45,14 +48,14 @@ class TaskController extends Controller
     /**
      * Lấy thống kê công việc
      */
-    private function getTaskStats()
+    private function getTaskStats($userId)
     {
         return [
-            'total' => Task::count(),
-            'pending' => Task::where('status', 'pending')->count(),
-            'in_progress' => Task::where('status', 'in_progress')->count(),
-            'completed' => Task::where('status', 'completed')->count(),
-            'overdue' => Task::where('status', '!=', 'completed')
+            'total' => Task::where('user_id', $userId)->count(),
+            'pending' => Task::where('user_id', $userId)->where('status', 'pending')->count(),
+            'in_progress' => Task::where('user_id', $userId)->where('status', 'in_progress')->count(),
+            'completed' => Task::where('user_id', $userId)->where('status', 'completed')->count(),
+            'overdue' => Task::where('user_id', $userId)->where('status', '!=', 'completed')
                 ->where('due_date', '<', now())
                 ->count()
         ];
@@ -77,7 +80,7 @@ class TaskController extends Controller
             'status' => 'required|in:pending,in_progress,completed',
             'due_date' => 'nullable|date'
         ]);
-
+        $validated['user_id'] = $request->user()->id;
         Task::create($validated);
 
         return redirect()->route('tasks.index')

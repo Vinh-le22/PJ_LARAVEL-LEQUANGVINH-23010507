@@ -13,10 +13,16 @@ class Task extends Model
         'title',
         'description',
         'status',
-        'due_date'
+        'due_date',
+        'user_id'
     ];
 
     protected $casts = [
         'due_date' => 'date'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

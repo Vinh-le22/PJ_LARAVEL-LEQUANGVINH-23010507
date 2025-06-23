@@ -24,7 +24,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <h5 class="text-muted text-uppercase mb-0">Tổng số công việc</h5>
-                            <p class="h4 mb-0">{{ \App\Models\Task::count() }}</p>
+                            <p class="h4 mb-0">{{ \App\Models\Task::where('user_id', Auth::id())->count() }}</p>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <h5 class="text-muted text-uppercase mb-0">Đang thực hiện</h5>
-                            <p class="h4 mb-0">{{ \App\Models\Task::where('status', 'in_progress')->count() }}</p>
+                            <p class="h4 mb-0">{{ \App\Models\Task::where('user_id', Auth::id())->where('status', 'in_progress')->count() }}</p>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <h5 class="text-muted text-uppercase mb-0">Đã hoàn thành</h5>
-                            <p class="h4 mb-0">{{ \App\Models\Task::where('status', 'completed')->count() }}</p>
+                            <p class="h4 mb-0">{{ \App\Models\Task::where('user_id', Auth::id())->where('status', 'completed')->count() }}</p>
                         </div>
                     </div>
                 </div>
