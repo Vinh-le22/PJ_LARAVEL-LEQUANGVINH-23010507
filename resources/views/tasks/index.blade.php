@@ -57,7 +57,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('tasks.index') }}" method="GET" class="row g-3">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="status" class="form-label">Trạng thái</label>
                             <select name="status" id="status" class="form-select">
                                 <option value="">Tất cả</option>
@@ -66,7 +66,18 @@
                                 <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label for="category_id" class="form-label">Danh mục</label>
+                            <select name="category_id" id="category_id" class="form-select">
+                                <option value="">Tất cả</option>
+                                @foreach(Auth::user()->categories as $category)
+                                    <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
                             <label for="sort" class="form-label">Sắp xếp theo</label>
                             <select name="sort" id="sort" class="form-select">
                                 <option value="">Mới nhất</option>
@@ -74,7 +85,7 @@
                                 <option value="due_date_desc" {{ request('sort') == 'due_date_desc' ? 'selected' : '' }}>Thời hạn giảm dần</option>
                             </select>
                         </div>
-                        <div class="col-md-4 d-flex align-items-end">
+                        <div class="col-md-3 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary">Lọc</button>
                             <a href="{{ route('tasks.index') }}" class="btn btn-secondary ms-2">Đặt lại</a>
                         </div>
@@ -102,6 +113,7 @@
                                 <thead>
                                     <tr>
                                         <th>Tiêu đề</th>
+                                        <th>Danh mục</th>
                                         <th>Trạng thái</th>
                                         <th>Thời hạn</th>
                                         <th>Thao tác</th>
@@ -111,6 +123,13 @@
                                     @foreach($tasks as $task)
                                         <tr>
                                             <td>{{ $task->title }}</td>
+                                            <td>
+                                                @if($task->category)
+                                                    <span class="badge" style="background-color: {{ $task->category->color }}">{{ $task->category->name }}</span>
+                                                @else
+                                                    <span class="text-muted">Không có</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 @switch($task->status)
                                                     @case('pending')
@@ -144,4 +163,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

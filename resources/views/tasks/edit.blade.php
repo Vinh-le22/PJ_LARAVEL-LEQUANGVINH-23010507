@@ -34,6 +34,19 @@
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('status')" />
                         </div>
+                        
+                        <div>
+                            <x-input-label for="category_id" :value="__('Danh mục')" />
+                            <select id="category_id" name="category_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="">Không có danh mục</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $task->category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('category_id')" />
+                        </div>
 
                         <div>
                             <x-input-label for="due_date" :value="__('Hạn hoàn thành')" />
@@ -55,4 +68,4 @@
         <a href="{{ route('tasks.create') }}" ...>Tạo công việc mới</a>
         <a href="{{ route('tasks.index') }}" ...>Xem danh sách công việc</a>
     </div>
-</x-app-layout> 
+</x-app-layout>

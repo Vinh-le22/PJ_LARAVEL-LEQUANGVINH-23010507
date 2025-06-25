@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,16 @@ Route::middleware('auth')->group(function () {
 
     // Routes cho quản lý công việc
     Route::resource('tasks', TaskController::class);
+    
+    // Routes cho quản lý danh mục
+    Route::resource('categories', CategoryController::class);
+    
+    // Routes cho lịch
+    Route::get('/calendar', [TaskController::class, 'calendar'])->name('tasks.calendar');
+    
+    // Routes cho thống kê
+    Route::get('/statistics', [TaskController::class, 'statistics'])->name('tasks.statistics');
+    Route::post('/tasks/{task}/update-date', [TaskController::class, 'updateDate'])->name('tasks.update-date');
 });
 
 require __DIR__.'/auth.php';

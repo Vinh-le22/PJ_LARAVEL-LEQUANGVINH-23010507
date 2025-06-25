@@ -45,6 +45,22 @@
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
+                    
+                    <!-- Danh mục -->
+                    <div class="mb-3">
+                        <label for="category_id" class="form-label">{{ __('Danh mục') }}</label>
+                        <select id="category_id" name="category_id" class="form-select">
+                            <option value="">Không có danh mục</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     <!-- Hạn hoàn thành -->
                     <div class="mb-3">
@@ -63,4 +79,4 @@
             </div>
         </div>
     </div>
-@endsection 
+@endsection

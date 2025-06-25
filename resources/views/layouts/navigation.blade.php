@@ -15,10 +15,33 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}" href="{{ route('tasks.index') }}">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('tasks.*') || request()->routeIs('categories.*') ? 'active' : '' }}" 
+                       href="#" id="taskDropdown" role="button" data-bs-toggle="dropdown">
                         Công việc
                     </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item {{ request()->routeIs('tasks.index') ? 'active' : '' }}" href="{{ route('tasks.index') }}">
+                                Danh sách công việc
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}">
+                                Danh mục
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request()->routeIs('tasks.calendar') ? 'active' : '' }}" href="{{ route('tasks.calendar') }}">
+                                Lịch công việc
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request()->routeIs('tasks.statistics') ? 'active' : '' }}" href="{{ route('tasks.statistics') }}">
+                                Thống kê
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 
