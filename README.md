@@ -93,6 +93,8 @@ php artisan key:generate
 # Tạo các bảng trong database dựa trên các file migration
 php artisan migrate
 ```
+Database
+![Untitled](https://github.com/user-attachments/assets/6aeb4a42-ba01-4b88-80d7-265e916f04a6)
 
 6. Khởi động server:
 ```bash
@@ -118,6 +120,8 @@ php artisan serve
 - `routes/` - Chứa các định nghĩa routes
 - `storage/` - Chứa các file được upload và logs
 - `tests/` - Chứa các file test
+## Sơ đồ trình tự (Sequence Diagram)
+![dPHFRzD04CNl-odc28T6uZzK2chKL6bLQXLm4HotZfMragoDlKRfiUeHaEWHmQ5LwOqA49ni8GuRzNliDs56Zkl4hi7jpTAyUVjxwwTTYHGFLJmUCUMfaGjFTrw1_Ko_izR1rlkhyCAaNy3gdNypwUSDwEgFLWzks9tdcx3LiJgzjQqrouREzlPDnhYZ_11s8ZTa0NfwZXTmgQ0J1ApF](https://github.com/user-attachments/assets/54aed217-2d42-4406-937b-622342734ed4)
 
 ## Đóng góp
 
