@@ -28,13 +28,6 @@
   - Đặt hạn hoàn thành
   - Xóa công việc
 
-## Tính năng đang phát triển
-
-- 🎯 **Theo dõi tiến độ**
-  - Trạng thái: Đang chờ, Đang thực hiện, Hoàn thành
-  - Thời hạn hoàn thành
-  - Mô tả chi tiết
-
 ## Yêu cầu hệ thống
 
 - PHP >= 8.1
@@ -64,7 +57,21 @@ composer install
 # Tạo file .env để lưu trữ các biến môi trường
 cp .env.example .env
 ```
-- Cấu hình thông tin database trong file `.env`:
+- Cấu hình thông tin database Railway trong file `.env`:
+
+Truy cập trang quản lý database trên Railway, lấy các thông tin kết nối (host, port, database, username, password) và cập nhật như sau:
+
+```
+# Cấu hình kết nối database Railway
+DB_CONNECTION=mysql
+DB_HOST=your-railway-host
+DB_PORT=your-railway-port
+DB_DATABASE=your-railway-database
+DB_USERNAME=your-railway-username
+DB_PASSWORD=your-railway-password
+```
+
+Thay các giá trị `your-railway-*` bằng thông tin thực tế từ Railway dashboard.
 ```
 # Cấu hình kết nối database
 DB_CONNECTION=mysql
